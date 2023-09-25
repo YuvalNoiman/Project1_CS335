@@ -30,55 +30,49 @@ def merge_schedule(s1, s2):
    s3 = []
    i = 0
    j = 0
-   s3_index = -1
    while True:
-      #print(s3)
       if (i == (len(s1)) and j == (len(s2))):
          break
       elif (i == (len(s1)) and j < (len(s2))):
-         if (less_than(s3[s3_index][1],s2[j][0]) == False):
-            #print(s2[j][0])
-            #print(s3[s3_index][1])
-            if (less_than(s3[s3_index][1],s2[j][1])):
-                s3[s3_index][1] = s2[j][1]
-         else:
-            s3.append(s2[j])
-            s3_index = s3_index+1
+         s3.append(s2[j])
          j = j+1
       elif (i < (len(s1)) and j == (len(s2))):
-         if (less_than(s3[s3_index][1],s1[i][0]) == False):
-            #print(s3[s3_index][1])
-            #print(s1[i][1])
-            if (less_than(s3[s3_index][1],s1[i][1])):
-                s3[s3_index][1] = s1[i][1]
-         else:
-            s3.append(s1[i])
-            s3_index = s3_index+1
+         s3.append(s1[i])
          i = i+1
       elif (less_than(s1[i][0],s2[j][0])):
-         if (s3_index > -1):
-            if (less_than(s3[s3_index][1],s1[i][0]) == False):
-               if (less_than(s3[s3_index][1],s1[i][1])):
-                   s3[s3_index][1] = s1[i][1]
-            else:
-               s3.append(s1[i])
-               s3_index = s3_index+1
-         else:
-            s3.append(s1[i])
-            s3_index = s3_index+1
+         s3.append(s1[i])
          i = i+1
       else:
-         if (s3_index > -1):
-            if (less_than(s3[s3_index][1],s2[j][0]) == False):
-               if (less_than(s3[s3_index][1],s2[j][1])):
-                   s3[s3_index][1] = s2[j][1]
-            else:
-               s3.append(s2[j])
-               s3_index = s3_index+1
-         else:
-            s3.append(s2[j])
-            s3_index = s3_index+1
+         s3.append(s2[j])
          j = j+1
+   #return s3
+   #print(s3)
+
+   """k = 0
+   s4 = []
+   while True:
+      if (k == len(s3)-1):
+         break
+      if (less_than(s3[k][1],s3[k+1][0]) == False):
+         s4.append([s3[k][0],s3[k+1][1]])
+         print(s4)
+         s3[k] = [s3[k][0],s3[k+1][1]]
+         s3[k+1] = [s3[k][0],s3[k+1][1]]
+         #print(s3)
+         #k = k - 1
+      else:
+         s4.append(s3[k])
+      k = k + 1
+   return s4"""
+
+   k = 0
+   while (k < len(s3)-1):
+      if (less_than(s3[k][1], s3[k+1][0]) == False):
+         if (less_than(s3[k][1], s3[k+1][1])):
+            s3[k][1] = s3[k+1][1]
+         s3.pop(k+1)
+      else:
+         k = k + 1
    return s3
 
 def merge_act(act1, act2):
