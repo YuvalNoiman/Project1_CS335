@@ -116,14 +116,14 @@ def match_schedule(s1, act1, s2, act2, m):
       act3 = (merge_act(act1,act2))
       act3_p1 = ["0:00",act3[1]]
       act3_p2 = [act3[0],"23:59"]
-   if (less_than(act1[1],act1[0])):
+   elif (less_than(act1[1],act1[0])):
       act3_p1 = [act2[0],act1[1]]
       act3_p2 = [act1[0],act2[1]]
       if (time_in_minutes(act3_p1[0],act3_p1[1]) <= 0):
          act3_p1 = []
       if (time_in_minutes(act3_p2[0],act3_p2[1]) <= 0):
          act3_p2 = []
-   if (less_than(act2[1],act2[0])):
+   elif (less_than(act2[1],act2[0])):
       act3_p1 = [act1[0],act2[1]]
       act3_p2 = [act2[0],act1[1]]
       if (time_in_minutes(act3_p1[0],act3_p1[1]) <= 0):
