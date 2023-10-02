@@ -45,8 +45,6 @@ def merge_schedule(s1, s2):
       else:
          s3.append(s2[j])
          j = j+1
-   #return s3
-   #print(s3)
 
    k = 0
    while (k < len(s3)-1):
@@ -85,7 +83,6 @@ def available(s, a):
       if (less_than(a[0],s[x+1][0])):
          if (less_than(s[x+1][0],a[1]) and less_than(a[0],s[x][1])):
             avail.append([s[x][1],s[x+1][0]])
-         #else:
          elif (less_than(a[0],s[x][1])):
             avail.append([s[x][1],a[1]])
             return avail
