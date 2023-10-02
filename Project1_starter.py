@@ -91,7 +91,8 @@ def available(s, a):
             avail.append([s[x][1],a[1]])
             #print(avail)
             return avail
-         else:
+         #else:
+         elif (less_than(s[x+1][0],a[1])):
             avail.append([a[0],s[x+1][0]])
             #print(avail)
    if (less_than(s[len(s)-1][1],a[1]) and less_than(a[0],s[x+1][0])):
@@ -119,17 +120,38 @@ def match_schedule(s1, act1, s2, act2, m):
    if (less_than(act1[1],act1[0]) and less_than(act2[1],act2[0])):
       act3 = (merge_act(act1,act2))
       act3_p1 = ["0:00",act3[1]]
-      #print(act3_p1)
       act3_p2 = [act3[0],"23:59"]
-      #print(act3_p2)
       avail1 = available(s3, act3_p1)
-      #print(avail1)
       avail2 = available(s3, act3_p2)
-      #print(avail2)
       availm1 = available_meeting(avail1, m)
       availm2 = available_meeting(avail2, m)
-      print(s3)
       return availm1 + availm2
+   if (less_than(act1[1],act1[0])):
+      act3_p1 = [act2[0],act1[1]]
+      if (time_in_minutes(act3_p1[0],act3_p1[1]) <= 0):
+         act3_p1 = []
+      act3_p2 = [act1[0],act2[1]]
+      if (time_in_minutes(act3_p2[0],act3_p2[1]) <= 0):
+         act3_p2 = []
+      avail1 = available(s3, act3_p1)
+      avail2 = available(s3, act3_p2)
+      availm1 = available_meeting(avail1, m)
+      availm2 = available_meeting(avail2, m)
+      return availm1 + availm2
+   if (less_than(act2[1],act2[0])):
+      #print(s3)
+      act3_p1 = [act1[0],act2[1]]
+      if (time_in_minutes(act3_p1[0],act3_p1[1]) <= 0):
+         act3_p1 = []
+      act3_p2 = [act2[0],act1[1]]
+      if (time_in_minutes(act3_p2[0],act3_p2[1]) <= 0):
+         act3_p2 = []
+      avail1 = available(s3, act3_p1)
+      avail2 = available(s3, act3_p2)
+      availm1 = available_meeting(avail1, m)
+      availm2 = available_meeting(avail2, m)
+      return availm1 + availm2
+    
    return availm
 
 
