@@ -172,6 +172,7 @@ def match_schedule(s1, act1, s2, act2, m):
 def main():
 
    file1 = open("input.txt", "r")
+   file2 = open("output.txt","w")
    while True:
       try:
          person1_Schedule  = ast.literal_eval(file1.readline())
@@ -181,11 +182,15 @@ def main():
          duration_of_meeting = int(file1.readline())
          file1.readline()
          print(match_schedule(person1_Schedule, person1_DailyAct, person2_Schedule, person2_DailyAct, duration_of_meeting))
+         file2.write(str(match_schedule(person1_Schedule, person1_DailyAct, person2_Schedule, person2_DailyAct, duration_of_meeting)))
+         file2.write("\n")
+         file2.write("\n")
          print("")
       except:
          break
 
    file1.close()
+   file2.close()
 
 if __name__ == "__main__":
     main()
