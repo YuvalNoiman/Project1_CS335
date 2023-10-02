@@ -76,21 +76,29 @@ def available(s, a):
    avail = []
    if (less_than(a[0],s[0][0]) and less_than(s[0][0],a[1])):
       avail.append([a[0],s[0][0]])
-   else:
+   #else:
    #elif(less_than(s[0][0],a[1]) == False):
    #elif(less_than(a[0],s[0][0]) == False):
-      avail.append([a[0],a[1]])
-      return avail
+      #avail.append([a[0],a[1]])
+      #return avail
    for x in range(len(s)-1):
-      if (less_than(s[x+1][0],a[1])):
-         avail.append([s[x][1],s[x+1][0]])
-         print(avail)
-      else:
-         avail.append([s[x][1],a[1]])
-         return avail
-   if (less_than(s[len(s)-1][1],a[1])):
+      if (less_than(a[0],s[x+1][0])):
+         if (less_than(s[x+1][0],a[1]) and less_than(a[0],s[x][1])):
+            avail.append([s[x][1],s[x+1][0]])
+           # print(avail)
+         #else:
+         elif (less_than(a[0],s[x][1])):
+            avail.append([s[x][1],a[1]])
+            #print(avail)
+            return avail
+         else:
+            avail.append([a[0],s[x+1][0]])
+            #print(avail)
+   if (less_than(s[len(s)-1][1],a[1]) and less_than(a[0],s[x+1][0])):
       avail.append([s[len(s)-1][1],a[1]])
-      print(avail)
+      #print(avail)
+   if (len(avail) == 0):
+      avail.append([a[0],a[1]])
    return avail
 
 def available_meeting(avail, m):
