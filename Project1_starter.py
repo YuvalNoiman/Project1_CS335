@@ -48,23 +48,6 @@ def merge_schedule(s1, s2):
    #return s3
    #print(s3)
 
-   """k = 0
-   s4 = []
-   while True:
-      if (k == len(s3)-1):
-         break
-      if (less_than(s3[k][1],s3[k+1][0]) == False):
-         s4.append([s3[k][0],s3[k+1][1]])
-         print(s4)
-         s3[k] = [s3[k][0],s3[k+1][1]]
-         s3[k+1] = [s3[k][0],s3[k+1][1]]
-         #print(s3)
-         #k = k - 1
-      else:
-         s4.append(s3[k])
-      k = k + 1
-   return s4"""
-
    k = 0
    while (k < len(s3)-1):
       if (less_than(s3[k][1], s3[k+1][0]) == False):
@@ -78,11 +61,11 @@ def merge_schedule(s1, s2):
 def merge_act(act1, act2):
 # merges activities
    act3 = []
-   if (act1[0] > act2[0]):
+   if (less_than(act1[0],act2[0]) == False):
       act3.append(act1[0])
    else:
       act3.append(act2[0])
-   if (act1[1] < act2[1]):
+   if (less_than(act1[1],act2[1])):
       act3.append(act1[1])
    else:
       act3.append(act2[1])
@@ -91,12 +74,23 @@ def merge_act(act1, act2):
 def available(s, a):
 #finds availability
    avail = []
-   if (less_than(a[0],s[0][0])):
+   if (less_than(a[0],s[0][0]) and less_than(s[0][0],a[1])):
       avail.append([a[0],s[0][0]])
+   else:
+   #elif(less_than(s[0][0],a[1]) == False):
+   #elif(less_than(a[0],s[0][0]) == False):
+      avail.append([a[0],a[1]])
+      return avail
    for x in range(len(s)-1):
-      avail.append([s[x][1],s[x+1][0]])
+      if (less_than(s[x+1][0],a[1])):
+         avail.append([s[x][1],s[x+1][0]])
+         print(avail)
+      else:
+         avail.append([s[x][1],a[1]])
+         return avail
    if (less_than(s[len(s)-1][1],a[1])):
       avail.append([s[len(s)-1][1],a[1]])
+      print(avail)
    return avail
 
 def available_meeting(avail, m):
@@ -110,44 +104,40 @@ def available_meeting(avail, m):
 def match_schedule(s1, act1, s2, act2, m):
 #matches schedules availability for meeting time of at least m
    s3 = merge_schedule(s1, s2)
-   act3 = merge_act(act1, act2)
-   avail = available(s3, act3)
-   availm = available_meeting(avail, m)
+   if (less_than(act1[0],act1[1]) and less_than(act2[0],act2[1])):
+      act3 = merge_act(act1, act2)
+      avail = available(s3, act3)
+      availm = available_meeting(avail, m)
+   if (less_than(act1[1],act1[0]) and less_than(act2[1],act2[0])):
+      act3 = (merge_act(act1,act2))
+      act3_p1 = ["0:00",act3[1]]
+      #print(act3_p1)
+      act3_p2 = [act3[0],"23:59"]
+      #print(act3_p2)
+      avail1 = available(s3, act3_p1)
+      #print(avail1)
+      avail2 = available(s3, act3_p2)
+      #print(avail2)
+      availm1 = available_meeting(avail1, m)
+      availm2 = available_meeting(avail2, m)
+      print(s3)
+      return availm1 + availm2
    return availm
 
 
 def main():
-   person1_Schedule =[ ['12:00', '13:00'], ['16:00', '18:00']]
-   #print(type(person1_Schedule))
-   person1_DailyAct = ['9:00', '19:00']
-   person2_Schedule = [['9:00', '10:30'], ['12:20', '14:30'], ['14:00', '15:00'], ['16:00', '17:00' ]]
-   person2_DailyAct = ['9:00', '18:30']
-   duration_of_meeting =30
 
-   print(match_schedule(person1_Schedule, person1_DailyAct, person2_Schedule, person2_DailyAct, duration_of_meeting))
-   print(less_than("16:00","14:00"))
    file1 = open("input.txt", "r")
    while True:
-   #for x in range(4):
       try:
-      #person1_Schedule =file1.readline().replace('\n', '').strip('][').split(', ')
          person1_Schedule  = ast.literal_eval(file1.readline())
-      #print(person1_Schedule)
-        # if (person1_Schedule == ""):
-         #   break
-      #print(type(person1_Schedule[0]))
          person1_DailyAct = ast.literal_eval(file1.readline())
-      #print(person1_DailyAct)
          person2_Schedule = ast.literal_eval(file1.readline())
-      #print(person2_Schedule)
          person2_DailyAct = ast.literal_eval(file1.readline())
-      #print(person2_DailyAct)
          duration_of_meeting = int(file1.readline())
-      #print(duration_of_meeting)
-      #print(file1.readline())
          file1.readline()
          print(match_schedule(person1_Schedule, person1_DailyAct, person2_Schedule, person2_DailyAct, duration_of_meeting))
-      #print(file1.readline())
+         print("")
       except:
          break
 
