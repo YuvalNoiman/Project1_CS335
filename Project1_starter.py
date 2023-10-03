@@ -139,8 +139,8 @@ def match_schedule(s1, act1, s2, act2, m):
 
 def main():
 
-   file1 = open("input.txt", "r")
-   file2 = open("output.txt","w")
+   file1 = open("Input.txt", "r")
+   file2 = open("Output.txt","w")
    while True:
       try:
          person1_Schedule  = ast.literal_eval(file1.readline())
